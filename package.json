@@ -1,0 +1,22 @@
+{
+  "name": "near-vbi-hackathon",
+  "version": "1.0.0",
+  "license": "(MIT AND Apache-2.0)",
+  "scripts": {
+    "start": "cd frontend && npm run start",
+    "deploy": "npm run build:contract && cd contract && near dev-deploy --wasmFile ./target/wasm32-unknown-unknown/release/near-vbi-hackathon.wasm",
+    "build": "npm run build:contract && npm run build:web",
+    "build:web": "cd frontend && npm run build",
+    "build:contract": "cd contract/a && rustup target add wasm32-unknown-unknown && cargo build --all --target wasm32-unknown-unknown --release",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "cd contract/a && cargo test",
+    "test:integration": "npm run build:contract && cd integration-tests && cargo run --example integration-tests",
+    "deps-install": "npm install && cd frontend && npm install && cd .."
+  },
+  "devDependencies": {
+    "near-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
