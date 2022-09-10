@@ -6,7 +6,7 @@ use near_sdk::{Balance, Timestamp, json_types::U128, AccountId};
 use workspaces::prelude::*;
 use workspaces::{network::Sandbox, Account, Contract, Worker};
 
-const PAYMENT_CONTRACT_PATH: &str = "../contract/payment/out/contract.wasm";
+const PAYMENT_CONTRACT_PATH: &str = "../contract/donate/out/contract.wasm";
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
