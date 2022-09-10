@@ -26,11 +26,8 @@ If you have a frontend, run `npm start`. This will run a dev server.
 Exploring The Code
 ==================
 
-1. The smart-contract code lives in the `/contract` folder. See the README there for
-   more info. In blockchain apps the smart contract is the "backend" of your app.
-2. The frontend code lives in the `/frontend` folder. `/frontend/index.html` is a great
-   place to start exploring. Note that it loads in `/frontend/index.js`,
-   this is your entrypoint to learn how the frontend connects to the NEAR blockchain.
+1. The smart-contract code lives in the `/contract` folder.
+2. The frontend code lives in the `/frontend` folder.
 3. Test your contract: `npm test`, this will run the tests in `integration-tests` directory.
 
 
@@ -98,10 +95,3 @@ On Windows, if you're seeing an error containing `EPERM` it may be related to sp
   [NEAR Wallet]: https://wallet.testnet.near.org/
   [near-cli]: https://github.com/near/near-cli
   [gh-pages]: https://github.com/tschaub/gh-pages
-
-
-Backend 
-==========
-
-npm install express-generator -g
-express --no-view backend --git

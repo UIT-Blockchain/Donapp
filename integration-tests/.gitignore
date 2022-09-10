@@ -18,6 +18,7 @@ node_modules
 
 # rust
 target
+Cargo.lock
 
 # misc
 .DS_Store

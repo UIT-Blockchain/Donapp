@@ -8,6 +8,7 @@ node_modules
 # build
 /out
 /dist
+package-lock.json
 
 # keys
 /templates/react/neardev
@@ -19,8 +20,7 @@ node_modules
 /build
 
 # rust
-contract/payment/target
-contract/ft/target
+contract/donate/target
 integration-tests/target
 
 # misc

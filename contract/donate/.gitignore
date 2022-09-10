@@ -6,8 +6,10 @@ node_modules
 .pnp.js
 
 # build
-/out
 /dist
+# rust
+target
+Cargo.lock
 
 # keys
 /templates/react/neardev
@@ -18,8 +20,6 @@ node_modules
 # production
 /build
 
-# rust
-target
 
 # misc
 .DS_Store

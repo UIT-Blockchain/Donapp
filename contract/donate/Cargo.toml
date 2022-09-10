@@ -1,5 +1,5 @@
 [package]
-name = "near-ecommerce-payment"
+name = "donate-service"
 version = "0.1.0"
 authors = ["Near Inc <hello@near.org>"]
 edition = "2021"
