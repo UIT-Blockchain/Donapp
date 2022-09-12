@@ -1,11 +1,3 @@
-# DEVIN Portfolio
-Copyright (c) 2022 DEVIN, Ltd;
-
-<img src="banner.png"/>
-
-## Project detail
-
-
 ### Commands
 
 - Run: `yarn` for install all packages
