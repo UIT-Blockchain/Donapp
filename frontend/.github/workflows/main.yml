@@ -1,0 +1,52 @@
+name: CICD
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Yarn & Eslint
+        run: npm install -g yarn
+
+      - uses: bahmutov/npm-install@v1
+
+      - name: Run Eslint Checking
+        run: yarn lint
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: Deploy
+        if: github.event_name != 'pull_request'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+        run: |
+          if [ "${BRANCH_NAME}" == "main" ];
+          then
+            npx vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID --confirm --prod
+          else
+            npx vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID --confirm
+          fi
