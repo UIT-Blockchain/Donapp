@@ -8,6 +8,16 @@ pub(crate) fn assert_one_yocto() {
     );
 }
 
+pub(crate) fn random_number() -> u64 {
+    0
+}
+
 impl Donap {
-    pub(crate) fn internal_transfer(&mut self) {}
+    pub(crate) fn internal_transfer(
+        &mut self,
+        streamer_id: AccountId,
+        money: Balance,
+        lucky_voter: AccountId,
+    ) {
+    }
 }

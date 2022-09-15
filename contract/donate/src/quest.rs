@@ -1,3 +1,7 @@
+use std::collections::HashSet;
+
+use near_sdk::collections::Vector;
+
 use crate::*;
 
 pub type QuestId = String;
@@ -5,11 +9,12 @@ pub type QuestId = String;
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct Quest {
     pub id: QuestId,
+    pub pool_id: PoolId,
     pub name: String,
     pub description: String,
     pub money: Balance,
     pub vote_threshold: u64,
-    pub voter_ids: UnorderedSet<AccountId>,
+    pub voter_ids: Vector<AccountId>,
 }
 
 #[near_bindgen]
@@ -18,5 +23,50 @@ impl Donap {
 
     pub fn reject_quest(&mut self) {}
 
-    pub fn vote_quest(&mut self) {}
+    pub fn vote_quest(&mut self, quest_id: QuestId) {
+        // get quest info
+        let mut quest = self
+            .quest_by_id
+            .get(&quest_id)
+            .expect("This quest doesn't exist");
+        let mut voter_ids = quest.voter_ids;
+        let current_voter_id = env::predecessor_account_id();
+
+        // number of voters must be less than threshold
+        assert!(
+            voter_ids.len() < quest.vote_threshold,
+            "The quest has enough votes."
+        );
+
+        // add voter
+        voter_ids.push(&current_voter_id);
+
+        // check whether the voter is final
+        if voter_ids.len() == quest.vote_threshold {
+            // if voter is final person
+            // 1. remove quest in quest_by_id
+            self.quest_by_id
+                .remove(&quest_id)
+                .expect("This quest doesn't exist");
+
+            // 2. remove quest from pool in pool_by_id
+            let pool_id = quest.pool_id;
+
+            let mut pool = self.pool_by_id.get(&pool_id).expect("Pool doesn't exist");
+            pool.quest_ids.remove(&quest_id);
+
+            self.pool_by_id.insert(&String::from(pool_id), &pool);
+
+            // 4. pick a random voter
+            let index = random_number();
+            let lucky_voter = voter_ids.get(index).expect("msg");
+
+            // // 3. transfer money to streamer and one luckily voter
+            let streamer_id = pool.streamer_id;
+            self.internal_transfer(streamer_id, quest.money, lucky_voter);
+        } else {
+            quest.voter_ids = voter_ids;
+            self.quest_by_id.insert(&quest_id, &quest);
+        }
+    }
 }

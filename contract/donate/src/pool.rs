@@ -5,6 +5,7 @@ pub type PoolId = String;
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct Pool {
     pub id: PoolId,
+    pub streamer_id: AccountId,
     pub deposit: Balance,
     pub maximum_quests: u64,
     pub expired_at: u64,
