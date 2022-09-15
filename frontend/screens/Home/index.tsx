@@ -7,7 +7,7 @@ export const AppScreen: IComponent = ({}) => {
   return (
     <div
       className={cx(
-        "dark:text-white bg-black h-screen flex justify-center items-center"
+        "dark:text-white bg-default h-screen flex justify-center items-center"
       )}
     >
       <Link href="/donapp" passHref>

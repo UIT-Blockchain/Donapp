@@ -15,8 +15,7 @@ module.exports = {
         xxs: "0.5rem",
       },
       colors: {
-        default: "#0A1116",
-        widget: "#848484",
+        default: "#101729",
       },
       screens: {
         pc: "1200px",
