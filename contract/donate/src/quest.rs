@@ -65,4 +65,24 @@ impl Donap {
             self.quest_by_id.insert(&quest_id, &quest);
         }
     }
+
+    pub fn get_vote_percentage(&self, quest_id: QuestId) -> U64 {
+        let quest = self
+            .quest_by_id
+            .get(&quest_id)
+            .expect("Quest Id doesn't exit");
+
+        let current_vote = quest.voter_ids.len();
+
+        U64::from(current_vote / quest.vote_threshold)
+    }
+
+    pub fn get_vote_threshold(&self, quest_id: QuestId) -> U64 {
+        let quest = self
+            .quest_by_id
+            .get(&quest_id)
+            .expect("Quest Id doesn't exit");
+
+        U64::from(quest.vote_threshold)
+    }
 }
