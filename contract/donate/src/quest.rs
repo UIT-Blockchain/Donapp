@@ -5,11 +5,12 @@ pub type QuestId = String;
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct Quest {
     pub id: QuestId,
+    pub pool_id: PoolId,
     pub name: String,
     pub description: String,
     pub money: Balance,
     pub vote_threshold: u64,
-    pub voter_ids: UnorderedSet<AccountId>,
+    pub voter_ids: Vector<AccountId>,
 }
 
 #[near_bindgen]
