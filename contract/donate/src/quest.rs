@@ -1,7 +1,3 @@
-use std::collections::HashSet;
-
-use near_sdk::collections::Vector;
-
 use crate::*;
 
 pub type QuestId = String;
@@ -38,7 +34,7 @@ impl Donap {
             "The quest has enough votes."
         );
 
-        // add voter
+        // add voter into quest
         voter_ids.push(&current_voter_id);
 
         // check whether the voter is final
@@ -55,11 +51,11 @@ impl Donap {
             let mut pool = self.pool_by_id.get(&pool_id).expect("Pool doesn't exist");
             pool.quest_ids.remove(&quest_id);
 
-            self.pool_by_id.insert(&String::from(pool_id), &pool);
+            self.pool_by_id.insert(&pool_id, &pool);
 
             // 4. pick a random voter
-            let index = random_number();
-            let lucky_voter = voter_ids.get(index).expect("msg");
+            let index = random_number(voter_ids.len());
+            let lucky_voter = voter_ids.get(index).expect("Index is out of range");
 
             // // 3. transfer money to streamer and one luckily voter
             let streamer_id = pool.streamer_id;
