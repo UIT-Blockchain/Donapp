@@ -1,8 +1,8 @@
 type TDarkModeStatus = "dark" | "light" | "auto";
 type TTopBarStatus = "hidden" | "show";
 
-// interface TProjectInfo {
-//   name: string;
-//   description: string;
-//   imageSrc: string;
-// }
+interface IPoolItem {
+  id: number;
+  poolName: string;
+  description: string;
+}
