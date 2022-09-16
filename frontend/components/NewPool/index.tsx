@@ -1,8 +1,13 @@
-import Card from "@components/Card";
+import PoolCard from "@components/PoolCard";
+import PoolForm from "@components/PoolForm";
 
 interface NewPoolProps {
   streamerName: string;
-  thumbnailUrl?: string;
+  thumbnail: {
+    url: string;
+    width: number;
+    height: number;
+  };
   poolList?: Array<{
     poolName: string;
     description: string;
@@ -11,17 +16,19 @@ interface NewPoolProps {
 
 const NewPool: IComponent<NewPoolProps> = ({
   streamerName,
-  thumbnailUrl,
+  thumbnail,
   poolList,
 }) => {
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <Card
+    <div className="grid grid-cols-3 gap-4">
+      <PoolCard
         heading={streamerName}
-        thumbnail={thumbnailUrl ? thumbnailUrl : "null"}
+        thumbnail={thumbnail}
         listItems={poolList}
       />
-      <div>Card</div>
+      <div className="col-span-2 p-8 mt-12 ml-24 pr-40">
+        <PoolForm />
+      </div>
     </div>
   );
 };

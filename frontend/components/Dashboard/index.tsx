@@ -8,21 +8,25 @@ import {
   Tabs,
   TabsOrientation,
 } from "@reach/tabs";
-import Image from "next/image";
-import Link from "next/link";
 
-const poolList = [
+const streamers = [
   {
-    poolName: "trung thu",
-    description: "15/8/2022",
-  },
-  {
-    poolName: "trung thu",
-    description: "15/8/2022",
-  },
-  {
-    poolName: "trung thu",
-    description: "15/8/2022",
+    name: "Thay Giao Ba",
+    thumbnail: { url: "/card/lol.png", width: 1200, height: 675 },
+    poolList: [
+      {
+        poolName: "trung thu",
+        description: "15/8/2022",
+      },
+      {
+        poolName: "trung thu",
+        description: "15/8/2022",
+      },
+      {
+        poolName: "trung thu",
+        description: "15/8/2022",
+      },
+    ],
   },
 ];
 const panes = [
@@ -30,9 +34,9 @@ const panes = [
     menuItem: <IconDashboard name="home" />,
     render: (
       <NewPool
-        streamerName="3RB"
-        thumbnailUrl="/mu-red.png"
-        poolList={poolList}
+        streamerName={streamers[0].name}
+        thumbnail={streamers[0].thumbnail}
+        poolList={streamers[0].poolList}
       />
     ),
   },
@@ -52,38 +56,21 @@ const panes = [
 
 const Dashboard = () => {
   return (
-    <div className="dashboard p-4 relative">
-      <div className="flex">
-        <Link href="/">
-          <a className="logo w-20 h-20">
-            <Image
-              src={`/mu-red.png`}
-              alt="mu-red"
-              width={20}
-              height={20}
-              className="m-0"
-            />
-          </a>
-        </Link>
-      </div>
-      <div className="bg-default border-2 border-indigo-500 rounded-[3.5rem]">
-        <Tabs orientation={TabsOrientation.Vertical}>
-          <TabList className="flex items-center justify-around">
-            {panes.map((pane, index) => (
-              <Tab key={index} className="!border-none w-[91px] !py-12">
-                {pane.menuItem}
-              </Tab>
-            ))}
-          </TabList>
-          <TabPanels className="tab-panels px-12 pt-2 pb-12 grow rounded-b-[3.5rem] h-[918px]">
-            {panes.map((pane, index) => (
-              <TabPanel key={index} className="h-full">
-                {pane.render}
-              </TabPanel>
-            ))}
-          </TabPanels>
-        </Tabs>
-      </div>
+    <div className="dashboard">
+      <Tabs className="flex gap-4" orientation={TabsOrientation.Vertical}>
+        <TabList className="flex flex-col justify-center w-[80px]">
+          {panes.map((pane, index) => (
+            <Tab key={index} className="!border-none !py-16">
+              {pane.menuItem}
+            </Tab>
+          ))}
+        </TabList>
+        <TabPanels className="tab-panels px-12 pt-2 pb-12 grow rounded-b-[3.5rem]">
+          {panes.map((pane, index) => (
+            <TabPanel key={index}>{pane.render}</TabPanel>
+          ))}
+        </TabPanels>
+      </Tabs>
     </div>
   );
 };

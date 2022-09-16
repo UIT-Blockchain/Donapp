@@ -10,8 +10,8 @@ const IconDashboard: IComponent<IconDashboardProps> = ({ name }) => {
         <Image
           className="w-full h-full opacity-90"
           src={`/icons/${name}.svg`}
-          width="20"
-          height="20"
+          width="30"
+          height="30"
           alt="icon"
         />
       </span>

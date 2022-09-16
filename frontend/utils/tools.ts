@@ -5,4 +5,11 @@ import classNames from "classnames";
  */
 const cx = classNames;
 
-export { cx };
+/**
+ * 
+ capitalize
+ */
+
+const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
+
+export { capitalize, cx };

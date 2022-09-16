@@ -16,6 +16,7 @@ module.exports = {
       },
       colors: {
         default: "#101729",
+        card: "#17223B",
       },
       screens: {
         pc: "1200px",
@@ -24,3 +25,5 @@ module.exports = {
   },
   plugins: [],
 };
+
+//
