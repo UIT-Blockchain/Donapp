@@ -8,7 +8,7 @@ pub struct Quest {
     pub pool_id: PoolId,
     pub name: String,
     pub description: String,
-    pub money: Balance,
+    pub amount: Balance,
     pub vote_threshold: u64,
     pub voter_ids: Vector<AccountId>,
 }
@@ -49,7 +49,7 @@ impl Donap {
             let pool_id = quest.pool_id;
 
             let mut pool = self.pool_by_id.get(&pool_id).expect("Pool doesn't exist");
-            pool.quest_ids.remove(&quest_id);
+            pool.quest_by_challenger.remove(&quest_id);
 
             self.pool_by_id.insert(&pool_id, &pool);
 
@@ -57,9 +57,9 @@ impl Donap {
             let index = random_number(voter_ids.len());
             let lucky_voter = voter_ids.get(index).expect("Index is out of range");
 
-            // // 3. transfer money to streamer and one luckily voter
+            // // 3. transfer amount to streamer and one luckily voter
             let streamer_id = pool.streamer_id;
-            self.internal_transfer(streamer_id, quest.money, lucky_voter);
+            self.internal_transfer(streamer_id, quest.amount, lucky_voter);
         } else {
             quest.voter_ids = voter_ids;
             self.quest_by_id.insert(&quest_id, &quest);

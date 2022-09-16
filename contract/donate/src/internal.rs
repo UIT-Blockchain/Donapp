@@ -18,14 +18,14 @@ impl Donap {
     pub(crate) fn internal_transfer(
         &mut self,
         streamer_id: AccountId,
-        money: Balance,
+        amount: Balance,
         lucky_voter: AccountId,
     ) {
-        let money_of_streamer = money * 95 / 100;
-        let money_of_voter = money - money_of_streamer;
+        let amount_of_streamer = amount * 95 / 100;
+        let amount_of_voter = amount - amount_of_streamer;
 
         Promise::new(streamer_id)
-            .transfer(money_of_streamer)
-            .and(Promise::new(lucky_voter).transfer(money_of_voter));
+            .transfer(amount_of_streamer)
+            .and(Promise::new(lucky_voter).transfer(amount_of_voter));
     }
 }
