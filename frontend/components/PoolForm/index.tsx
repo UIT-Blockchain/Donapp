@@ -16,8 +16,8 @@ const PoolForm = () => {
   );
 
   return (
-    <form className="rounded-lg overflow-hidden">
-      <div className="flex bg-white items-center p-4">
+    <form className="rounded-lg overflow-hidden py-4">
+      <div className="flex bg-card items-center p-4 rounded-tl-lg rounded-tr-lg">
         <div className="icon">
           <Image
             src="/tx-icon.png"
@@ -30,14 +30,14 @@ const PoolForm = () => {
         </div>
         <input
           name="name"
-          className="text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-white focus:outline-none focus:border-b-2 focus:border-indigo-700 "
+          className="bg-card text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-card focus:outline-none focus:border-b-2 focus:border-indigo-700 "
           type="text"
           placeholder="The pool needs the name..."
           onChange={handleOnChange}
           value={inputValues.name}
         />
       </div>
-      <div className="flex bg-white items-center p-4 rounded-bl-lg rounded-br-lg overflow-hidden">
+      <div className="flex bg-card items-center p-4 rounded-bl-lg rounded-br-lg overflow-hidden">
         <div className="icon">
           <Image
             src="/tx-icon.png"
@@ -50,7 +50,7 @@ const PoolForm = () => {
         </div>
         <input
           name="desc"
-          className="text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-white focus:outline-none focus:border-b-2 focus:border-indigo-700 "
+          className="bg-card text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-card focus:outline-none focus:border-b-2 focus:border-indigo-700 "
           type="text"
           placeholder="Description"
           onChange={handleOnChange}
@@ -58,9 +58,9 @@ const PoolForm = () => {
         />
       </div>
 
-      <div className="flex justify-end p-6">
+      <div className="flex justify-end p-6 ">
         <button
-          className="bg-gradient-to-b from-[#9C2CF3] to-[#3A49F9] hover:bg-purple-400  text-white font-bold py-6 px-8 rounded-lg text-xl"
+          className="bg-gradient-to-b from-[#9C2CF3] to-[#3A49F9] hover:bg-purple-400  text-white font-bold w-[140px] py-6 px-8 rounded-lg text-xl"
           type="button"
         >
           {" "}

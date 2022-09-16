@@ -1,5 +1,5 @@
 import IconDashboard from "@components/IconDashboard";
-import NewPool from "@components/NewPool";
+import Pool from "@components/Pool";
 import {
   Tab,
   TabList,
@@ -15,15 +15,18 @@ const streamers = [
     thumbnail: { url: "/card/lol.png", width: 1200, height: 675 },
     poolList: [
       {
-        poolName: "trung thu",
+        id: 1,
+        poolName: "trung thu 1",
         description: "15/8/2022",
       },
       {
-        poolName: "trung thu",
+        id: 2,
+        poolName: "trung thu 2 ",
         description: "15/8/2022",
       },
       {
-        poolName: "trung thu",
+        id: 3,
+        poolName: "trung thu 3",
         description: "15/8/2022",
       },
     ],
@@ -33,7 +36,7 @@ const panes = [
   {
     menuItem: <IconDashboard name="home" />,
     render: (
-      <NewPool
+      <Pool
         streamerName={streamers[0].name}
         thumbnail={streamers[0].thumbnail}
         poolList={streamers[0].poolList}

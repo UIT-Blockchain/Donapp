@@ -12,4 +12,9 @@ const ToggleTopBarAtom = atom<TTopBarStatus>({
   default: "hidden",
 });
 
-export { DarkmodeAtom, ToggleTopBarAtom };
+const PoolSelectedAtom = atom<IPoolItem | null>({
+  key: "SELECTED_POOL",
+  default: null,
+});
+
+export { DarkmodeAtom, PoolSelectedAtom, ToggleTopBarAtom };
