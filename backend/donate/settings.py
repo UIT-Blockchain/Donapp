@@ -85,6 +85,28 @@ DATABASES = {
 }
 
 
+'''
+sudo apt install mysql-server
+sudo apt-get install libmysqlclient-dev
+sudo mysql
+CREATE DATABASE data_api CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+CREATE USER data_api_user@localhost IDENTIFIED BY 'uit@123_snack';
+GRANT ALL PRIVILEGES ON data_api.* TO data_api_user@localhost;
+FLUSH PRIVILEGES;
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'data_api',
+        'USER': 'data_api_user',
+        'PASSWORD': 'uit@123_snack',
+        'HOST': 'localhost',
+        'PORT': '',
+        'default-character-set': 'utf8_unicode_ci'
+    }
+}
+'''
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

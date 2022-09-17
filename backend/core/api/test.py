@@ -3,7 +3,7 @@ import json
 
 
 API_IP = 'http://127.0.0.1:8080/core/api/v1/'
-API_TOKEN = '83f867cc03316a9f8f65c82135b75ba3b3f0e8af'
+API_TOKEN = 'b7cc230a3fed86e884cbf30c2d1cbac21d84de6b'
 
 def create_quest_counter_example(quest_id, user_id):
     payload = {

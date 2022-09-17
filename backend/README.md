@@ -15,5 +15,4 @@
 - Password: uit@123
 
 # Test API
-- GET: curl -X GET http://127.0.0.1:8080/core/api/v1/quest-counter/?format=json
-- 
+- Check file core/api/test.py
