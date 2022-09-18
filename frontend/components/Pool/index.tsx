@@ -4,7 +4,7 @@ import PoolForm from "@components/PoolForm";
 
 const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
   const pool_id = streamer_id && streamer_id.concat(".pool");
-
+  console.log(streamer_id, quests);
   return (
     <div className="grid grid-cols-3 gap-4">
       {!!streamer_id && <PoolCard heading={streamer_id} listItems={quests} />}
