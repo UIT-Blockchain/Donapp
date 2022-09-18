@@ -13,6 +13,9 @@ router.register(r'quest-counter', QuestCounterViewSet)
 router.register(r'get-quest-counter-by-id', QuestCounterByIdViewSet)
 router.register(r'get-vote-status', VoteStatusViewSet)
 
+router.register(r'quest', QuestCounterViewSet)
+router.register(r'get-quest-counter-by-id', QuestCounterByIdViewSet)
+
 
 schema_view = get_schema_view(
    openapi.Info(

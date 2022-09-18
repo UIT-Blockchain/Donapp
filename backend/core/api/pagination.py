@@ -5,4 +5,11 @@ class QuestCounterPageNumberPagination(PageNumberPagination):
     """
     Custom pagination for good news
     """
-    page_size = 5 # for testing
+    page_size = 50 # for testing
+
+
+class QuestPageNumberPagination(PageNumberPagination):
+    """
+    Custom pagination for good news
+    """
+    page_size = 50 # for testing

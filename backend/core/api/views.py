@@ -5,9 +5,9 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from ..models import QuestCounter
+from ..models import QuestCounter, Quest
 from .pagination import QuestCounterPageNumberPagination
-from .serializers import QuestCounterSerializer
+from .serializers import QuestCounterSerializer, QuestSerializer
 
 
 class QuestCounterViewSet(viewsets.ModelViewSet):
@@ -55,3 +55,30 @@ class VoteStatusViewSet(viewsets.ModelViewSet):
         else:
             quest = []
         return quest
+
+
+class QuestViewSet(viewsets.ModelViewSet):
+    queryset = Quest.objects.all()
+    serializer_class = QuestSerializer
+
+    permission_classes = (IsAuthenticated,)
+
+
+class QuestByIdViewSet(viewsets.ModelViewSet):
+    queryset = Quest.objects.all()
+    serializer_class = QuestSerializer
+
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        streamer_id = self.request.query_params.get('streamer_id', None)
+        if quest_id:
+            count_query = Quest.objects.filter(streamer_id__exact=streamer_id)
+            if count_query:
+                quest = count_query
+            else:
+                quest = []
+        else:
+            quest = []
+        return quest
+
