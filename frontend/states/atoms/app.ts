@@ -16,5 +16,10 @@ const PoolSelectedAtom = atom<IPoolItem | null>({
   key: "SELECTED_POOL",
   default: null,
 });
+const NearContextAtom = atom<NearContractContext | null>({
+  key: "NEAR_CONTEXT",
+  default: null,
+  dangerouslyAllowMutability: true,
+});
 
-export { DarkmodeAtom, PoolSelectedAtom, ToggleTopBarAtom };
+export { DarkmodeAtom, NearContextAtom, PoolSelectedAtom, ToggleTopBarAtom };
