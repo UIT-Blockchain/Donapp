@@ -1,17 +1,17 @@
-import { NearContextAtom } from "@atoms/app";
-import AnimationBox from "@components/AnimationBox";
+import { NearContextAtom, SelectedPool } from "@atoms/app";
 import Pool from "@components/Pool";
+import PoolButton from "@components/PoolButton";
 import { cx } from "@utils/tools";
 import initContract from "near-api";
 import * as nearAPI from "near-api-js";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
 export const AppScreen: IComponent = ({}) => {
   const [nearContext, setNearContext] = useRecoilState(NearContextAtom);
-  const [pool, setPool] = useState<IPoolItem | null>(null);
+  const [selectedPool, setSelectedPool] = useRecoilState(SelectedPool);
 
   useEffect(() => {
     const initContractHandler = async () => {
@@ -32,20 +32,19 @@ export const AppScreen: IComponent = ({}) => {
     if (!nearContext) {
       initContractHandler();
     }
-  });
+    // console.log("init...", nearContext);
+  }, [selectedPool, nearContext, setSelectedPool, setNearContext]);
   useEffect(() => {
     const handleGetPool = async () => {
-      if (nearContext) {
-        await nearContext.contract
-          .get_pool({
-            streamer_id: nearContext.currentUser.accountId,
-          })
-          .then((data: IPoolItem) => setPool(data));
+      if (nearContext && nearContext.currentUser) {
+        await nearContext.contract.get_pool({
+          streamer_id: nearContext.currentUser.accountId,
+        });
       }
     };
 
     handleGetPool();
-  }, []);
+  }, [nearContext, setSelectedPool]);
 
   if (!nearContext) {
     return <div>loading</div>;
@@ -53,8 +52,6 @@ export const AppScreen: IComponent = ({}) => {
     return <div>loading</div>;
   }
 
-  // const contract = nearContext.contract as SteadyStudyTokenContractMethods;
-  // const currentUser: NearUserView = nearContext.currentUser as NearUserView;
   const wallet: nearAPI.WalletConnection =
     nearContext.wallet as nearAPI.WalletConnection;
 
@@ -72,7 +69,6 @@ export const AppScreen: IComponent = ({}) => {
     wallet.signOut();
     window.location.replace(window.location.origin + window.location.pathname);
   };
-
   return (
     <div
       className={cx(
@@ -86,12 +82,15 @@ export const AppScreen: IComponent = ({}) => {
           )}
         >
           <div className="z-10">
-            <div className="p-8 text-white" onClick={onClickSignOut}>
+            <div
+              className="p-4 text-indigo-700 absolute top-5 right-5 font-bold bg-white rounded hover:cursor-pointer hover:text-black hover:bg-indigo-700 duration-300 hover:scale-105"
+              onClick={onClickSignOut}
+            >
               Log out
             </div>
           </div>
 
-          <div className="bg-default border-2 border-indigo-500 rounded-[3.5rem] p-8">
+          <div className="bg-default border-2 border-indigo-500 rounded-[3.5rem] p-8 w-[1200px]">
             <div className="header flex relative">
               <Link href="/">
                 <a className="logo w-20 h-20">
@@ -104,7 +103,7 @@ export const AppScreen: IComponent = ({}) => {
                   />
                 </a>
               </Link>
-              <div className="absolute -right-[3.75rem] top-[2.75rem] origin-top-left rotate-12">
+              {/* <div className="absolute -right-[3.75rem] top-[2.75rem] origin-top-left rotate-12">
                 <Image
                   src={`/cloud.png`}
                   alt="cloud"
@@ -112,10 +111,17 @@ export const AppScreen: IComponent = ({}) => {
                   height={215}
                   className="m-0"
                 />
-              </div>
+              </div> */}
             </div>
-            <div className="rounded-[3.5rem]">
-              <Pool {...pool} />
+            <div className="rounded-[3.5rem] z-20">
+              {selectedPool ? (
+                <Pool {...selectedPool} />
+              ) : (
+                <div>
+                  <PoolButton />
+                  <PoolButton isJoin />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -138,7 +144,7 @@ export const AppScreen: IComponent = ({}) => {
           </div>
         </div>
       )}
-      <AnimationBox />
+      {/* <AnimationBox /> */}
     </div>
   );
 };
