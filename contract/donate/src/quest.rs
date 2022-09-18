@@ -2,11 +2,11 @@ use crate::*;
 
 pub type QuestId = String;
 
-#[derive(BorshDeserialize, BorshSerialize)]
+#[derive(Debug, BorshDeserialize, BorshSerialize)]
 pub struct Quest {
     pub id: QuestId,
+    pub challenger: AccountId,
     pub pool_id: PoolId,
-    pub name: String,
     pub description: String,
     pub amount: Balance,
     pub vote_threshold: u64,
@@ -15,9 +15,59 @@ pub struct Quest {
 
 #[near_bindgen]
 impl Donap {
-    pub fn create_quest(&mut self) {}
+    #[payable]
+    pub fn create_quest(&mut self, streamer_id: AccountId, id: String, description: String) {
+        assert!(self.quest_by_id.get(&id).is_none(), "Quest already existed");
+        let pool_id = format!("{}.pool", streamer_id);
+        let mut pool = self
+            .pool_by_id
+            .get(&pool_id)
+            .expect("Streamer have not created pool yet");
+        assert!(
+            pool.challenger_of_quest.len() <= MAXIMUM_QUESTS,
+            "Pool doesn't have enough slot"
+        );
+        let amount = env::attached_deposit();
+        let vote_threshold: u64 = yton(amount) as u64 * 10;
+        assert!(vote_threshold > 1, "Not enough amount");
+        let challenger = env::predecessor_account_id();
 
-    pub fn reject_quest(&mut self) {}
+        let quest = Quest {
+            id: id.clone(),
+            pool_id: pool_id.clone(),
+            challenger: challenger.clone(),
+            amount,
+            description,
+            vote_threshold,
+            voter_ids: Vector::new(id.as_bytes()),
+        };
+
+        self.quest_by_id.insert(&id, &quest);
+        pool.challenger_of_quest.insert(&id, &challenger);
+        self.pool_by_id.insert(&pool_id, &pool);
+    }
+
+    pub fn reject_quest(&mut self, quest_id: QuestId) {
+        let quest = self
+            .quest_by_id
+            .remove(&quest_id)
+            .expect("Quest doesn't exist");
+
+        let mut pool = self
+            .pool_by_id
+            .get(&quest.pool_id)
+            .expect("Pool doesn't exist");
+
+        let streamer_id = pool.streamer_id.clone();
+        let predecessor = env::predecessor_account_id();
+        assert_eq!(streamer_id, predecessor, "Only streamer rejects quest");
+
+        pool.challenger_of_quest
+            .remove(&quest_id)
+            .expect("Pool has not this quest");
+
+        self.pool_by_id.insert(&pool.id, &pool);
+    }
 
     pub fn vote_quest(&mut self, quest_id: QuestId) {
         // get quest info
@@ -25,6 +75,7 @@ impl Donap {
             .quest_by_id
             .get(&quest_id)
             .expect("This quest doesn't exist");
+
         let mut voter_ids = quest.voter_ids;
         let current_voter_id = env::predecessor_account_id();
 
@@ -33,6 +84,16 @@ impl Donap {
             voter_ids.len() < quest.vote_threshold,
             "The quest has enough votes."
         );
+
+        let voter_exists = self
+            .quest_by_id
+            .get(&quest_id)
+            .unwrap()
+            .voter_ids
+            .iter()
+            .find(|voter_id| voter_id == &current_voter_id);
+
+        assert_eq!(voter_exists, None, "You already voted");
 
         // add voter into quest
         voter_ids.push(&current_voter_id);
@@ -49,7 +110,7 @@ impl Donap {
             let pool_id = quest.pool_id;
 
             let mut pool = self.pool_by_id.get(&pool_id).expect("Pool doesn't exist");
-            pool.quest_by_challenger.remove(&quest_id);
+            pool.challenger_of_quest.remove(&quest_id);
 
             self.pool_by_id.insert(&pool_id, &pool);
 
