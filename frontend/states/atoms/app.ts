@@ -12,4 +12,14 @@ const ToggleTopBarAtom = atom<TTopBarStatus>({
   default: "hidden",
 });
 
-export { DarkmodeAtom, ToggleTopBarAtom };
+const SelectedQuestAtom = atom<string | null>({
+  key: "SELECTED_QUEST",
+  default: null,
+});
+const NearContextAtom = atom<NearContractContext | null>({
+  key: "NEAR_CONTEXT",
+  default: null,
+  dangerouslyAllowMutability: true,
+});
+
+export { DarkmodeAtom, NearContextAtom, SelectedQuestAtom, ToggleTopBarAtom };

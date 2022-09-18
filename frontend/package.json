@@ -11,10 +11,16 @@
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
+    "@near-wallet-selector/core": "^7.0.2",
+    "@near-wallet-selector/ledger": "^7.0.2",
+    "@near-wallet-selector/my-near-wallet": "^7.0.2",
+    "@reach/tabs": "^0.17.0",
     "@types/react-slick": "^0.23.8",
+    "bn.js": "^5.2.1",
     "classnames": "^2.3.1",
     "hoist-non-react-statics": "^3.3.2",
     "lodash": "^4.17.21",
+    "near-api-js": "^0.44.2",
     "next": "^12.1.5",
     "next-translate": "^1.4.0",
     "programming-languages-logos": "^0.0.3",

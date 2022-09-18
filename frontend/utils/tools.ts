@@ -5,4 +5,12 @@ import classNames from "classnames";
  */
 const cx = classNames;
 
-export { cx };
+/**
+ * 
+ capitalize
+ */
+
+const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
+const yton = (amount: number) =>
+  (amount * 10).toString().concat("00000000000000000000000");
+export { capitalize, cx, yton };
