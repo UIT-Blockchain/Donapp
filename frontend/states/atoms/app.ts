@@ -12,8 +12,8 @@ const ToggleTopBarAtom = atom<TTopBarStatus>({
   default: "hidden",
 });
 
-const PoolSelectedAtom = atom<IPoolItem | null>({
-  key: "SELECTED_POOL",
+const SelectedQuestAtom = atom<string | null>({
+  key: "SELECTED_QUEST",
   default: null,
 });
 const NearContextAtom = atom<NearContractContext | null>({
@@ -22,4 +22,4 @@ const NearContextAtom = atom<NearContractContext | null>({
   dangerouslyAllowMutability: true,
 });
 
-export { DarkmodeAtom, NearContextAtom, PoolSelectedAtom, ToggleTopBarAtom };
+export { DarkmodeAtom, NearContextAtom, SelectedQuestAtom, ToggleTopBarAtom };

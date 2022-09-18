@@ -31,7 +31,12 @@ export default async function initContract() {
     // View methods are read-only – they don't modify the state, but usually return some value
     viewMethods: ["ft_balance_of", "get_pool", "get_quest"],
     // Change methods can modify the state, but you don't receive the returned value when called
-    changeMethods: ["ft_report_study_commit", "create_pool"],
+    changeMethods: [
+      "ft_report_study_commit",
+      "create_pool",
+      "reject_quest",
+      "delete_pool",
+    ],
     // ContractMethods has no sender
     // // Sender is the account ID to initialize transactions.
     // // getAccountId() will return empty string if user is still unauthorized

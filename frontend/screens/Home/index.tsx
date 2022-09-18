@@ -89,12 +89,6 @@ export const AppScreen: IComponent = ({}) => {
   //   fieldset.disabled = false;
   //   url1.focus();
   // };
-  // const handleCreatePool = async () => {
-  //   // await contract.create_pool(
-  //   //   {},
-  //   //   BOATLOAD_OF_GAS,
-  //   //   "25000000000000000000000000"
-  //   // );
 
   // console.log("pool:  ", pool);
 

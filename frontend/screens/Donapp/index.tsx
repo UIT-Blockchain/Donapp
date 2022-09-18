@@ -1,9 +1,27 @@
-import Dashboard from "@components/Dashboard";
+import { NearContextAtom } from "@atoms/app";
+import Pool from "@components/Pool";
 import { cx } from "@utils/tools";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 export const DonappScreen: IComponent = ({}) => {
+  const nearContext = useRecoilValue(NearContextAtom);
+  const [pool, setPool] = useState<IPoolItem | null>(null);
+  useEffect(() => {
+    const handleGetPool = async () => {
+      if (nearContext) {
+        await nearContext.contract
+          .get_pool({
+            streamer_id: nearContext.currentUser.accountId,
+          })
+          .then((data: IPoolItem) => setPool(data));
+      }
+    };
+
+    handleGetPool();
+  }, []);
   return (
     <div
       className={cx(
@@ -34,7 +52,7 @@ export const DonappScreen: IComponent = ({}) => {
           </div>
         </div>
         <div className="rounded-[3.5rem]">
-          <Dashboard />
+          <Pool {...pool} />
         </div>
       </div>
     </div>

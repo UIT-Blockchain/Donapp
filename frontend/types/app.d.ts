@@ -5,9 +5,17 @@ type TTopBarStatus = "hidden" | "show";
 
 interface IPoolItem {
   id: string;
-  poolName?: string;
-  description?: string;
-  challenger_of_quest: any;
+  streamer_id: string;
+  quests: Array<IQuest>;
+}
+interface IQuest {
+  id: number;
+  challenger: string;
+  pool_id: string;
+  description: string;
+  amount: number;
+  vote_threshold: number;
+  voter_ids: Array<string>;
 }
 
 interface NearUserView {
