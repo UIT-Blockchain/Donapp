@@ -4,7 +4,7 @@ module.exports = {
     sourceType: "module",
   },
   env: { es6: true },
-  extends: ["next/core-web-vitals", "prettier"],
+  extends: ["next", "next/core-web-vitals", "prettier"],
   plugins: ["simple-import-sort", "import", "prettier"],
   rules: {
     "prettier/prettier": "error",
