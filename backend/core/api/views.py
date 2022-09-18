@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from ..models import QuestCounter, Quest
 from .pagination import QuestCounterPageNumberPagination
-from .serializers import QuestCounterSerializer, QuestSerializer
+from .serializers import QuestCounterSerializer, QuestSerializer, QuestRetrievalSerializer
 
 
 class QuestCounterViewSet(viewsets.ModelViewSet):
@@ -64,15 +64,15 @@ class QuestViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
 
-class QuestByIdViewSet(viewsets.ModelViewSet):
+class QuestByStreamerViewSet(viewsets.ModelViewSet):
     queryset = Quest.objects.all()
-    serializer_class = QuestSerializer
+    serializer_class = QuestRetrievalSerializer
 
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         streamer_id = self.request.query_params.get('streamer_id', None)
-        if quest_id:
+        if streamer_id:
             count_query = Quest.objects.filter(streamer_id__exact=streamer_id)
             if count_query:
                 quest = count_query

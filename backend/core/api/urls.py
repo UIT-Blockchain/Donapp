@@ -6,15 +6,15 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from .views import QuestCounterViewSet, QuestCounterByIdViewSet, VoteStatusViewSet
+from .views import QuestCounterViewSet, QuestCounterByIdViewSet, VoteStatusViewSet, QuestViewSet, QuestByStreamerViewSet
 
 router = routers.DefaultRouter()
 router.register(r'quest-counter', QuestCounterViewSet)
 router.register(r'get-quest-counter-by-id', QuestCounterByIdViewSet)
 router.register(r'get-vote-status', VoteStatusViewSet)
 
-router.register(r'quest', QuestCounterViewSet)
-router.register(r'get-quest-counter-by-id', QuestCounterByIdViewSet)
+router.register(r'quest', QuestViewSet)
+router.register(r'get-quest-by-streamer', QuestByStreamerViewSet)
 
 
 schema_view = get_schema_view(
