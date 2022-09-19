@@ -1,6 +1,6 @@
 import { NearContextAtom } from "@atoms/app";
 import { BOATLOAD_OF_GAS } from "@utils/constant";
-import { yton } from "@utils/tools";
+import { ntoy } from "@utils/tools";
 import { useRecoilValue } from "recoil";
 
 const QuestForm = () => {
@@ -15,7 +15,7 @@ const QuestForm = () => {
           description,
         },
         BOATLOAD_OF_GAS,
-        yton(amount)
+        ntoy(amount)
       );
     }
   };

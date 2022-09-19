@@ -62,6 +62,8 @@ impl Donap {
         let predecessor = env::predecessor_account_id();
         assert_eq!(streamer_id, predecessor, "Only streamer rejects quest");
 
+        Promise::new(quest.challenger.clone()).transfer(quest.amount.clone());
+
         pool.challenger_of_quest
             .remove(&quest_id)
             .expect("Pool has not this quest");

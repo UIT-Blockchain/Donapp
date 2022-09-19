@@ -43,21 +43,10 @@ const PoolCard: IComponent<PoolCardProps> = ({
     }
   };
 
-  const handleVoteQuest = async (id: string) => {
-    if (nearContext) {
-      await nearContext.contract.vote_quest(
-        {
-          quest_id: id,
-        },
-        BOATLOAD_OF_GAS
-      );
-    }
-  };
-
   return (
-    <div className="bg-card text-white rounded-3xl py-6">
+    <div className="bg-card text-white rounded-3xl px-8 py-6">
       <h1 className="text-white text-4xl font-bold ml-6 mb-6">{heading}</h1>
-      <div>
+      {/* <div>
         <Image
           src={"/lol.png"}
           width={1200}
@@ -66,7 +55,7 @@ const PoolCard: IComponent<PoolCardProps> = ({
           className="m-0"
           alt="pool thumbnail"
         />
-      </div>
+      </div> */}
 
       {!!listItems && (
         <ul className="py-6 overflow-hidden">

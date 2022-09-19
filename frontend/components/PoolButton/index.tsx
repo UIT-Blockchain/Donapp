@@ -1,6 +1,6 @@
 import { NearContextAtom, SelectedPool } from "@atoms/app";
 import { BOATLOAD_OF_GAS } from "@utils/constant";
-import { yton } from "@utils/tools";
+import { ntoy } from "@utils/tools";
 import Image from "next/image";
 import { ChangeEvent, useCallback, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -21,7 +21,7 @@ const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
 
   const handleCreatePool = async () => {
     if (nearContext) {
-      await nearContext.contract.create_pool({}, BOATLOAD_OF_GAS, yton(25));
+      await nearContext.contract.create_pool({}, BOATLOAD_OF_GAS, ntoy(25));
     }
   };
   const handleGetPool = async (input: string) => {
@@ -31,27 +31,21 @@ const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
           streamer_id: input,
         })
         .then((data: IPoolItem) => {
-          setSelectedPool(data);
-          console.log("data:", data);
+          if (data) {
+            setSelectedPool(data);
+          } else {
+            alert(`${input} doesn't create pool`);
+          }
         });
     }
   };
   return (
-    <div className="flex justify-end p-6 ">
+    <div className="flex justify-center p-6 ">
       {!!isJoin ? (
-        <div>
-          <button
-            className="bg-green-800 from-[#9C2CF3] to-[#3A49F9] hover:bg-purple-400  text-white font-bold w-[140px] py-6 px-8 rounded-lg text-xl"
-            type="button"
-            onClick={() => {
-              handleGetPool(poolId);
-            }}
-          >
-            Join
-          </button>
-          <div>
+        <div className="flex">
+          <div className="mx-4">
             <form className="rounded-lg overflow-hidden">
-              <div className="flex bg-white items-center p-4">
+              <div className="flex bg-white items-center px-4 py-2">
                 <div className="icon">
                   <Image
                     src="/tx-icon.png"
@@ -73,6 +67,15 @@ const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
               </div>
             </form>
           </div>
+          <button
+            className="bg-green-800 from-[#9C2CF3] to-[#3A49F9] hover:bg-purple-400  text-white font-bold w-[140px] py-6 px-8 rounded-lg text-xl"
+            type="button"
+            onClick={() => {
+              handleGetPool(poolId);
+            }}
+          >
+            Join
+          </button>
         </div>
       ) : (
         <button

@@ -19,8 +19,7 @@ export const AppScreen: IComponent = ({}) => {
         initContract().then(
           ({ contract, currentUser, nearConfig, walletConnection }) => {
             setNearContext({
-              contract: contract as nearAPI.Contract &
-                SteadyStudyTokenContractMethods,
+              contract: contract as nearAPI.Contract,
               currentUser,
               nearConfig,
               wallet: walletConnection,
@@ -32,14 +31,17 @@ export const AppScreen: IComponent = ({}) => {
     if (!nearContext) {
       initContractHandler();
     }
-    // console.log("init...", nearContext);
   }, [selectedPool, nearContext, setSelectedPool, setNearContext]);
+
   useEffect(() => {
     const handleGetPool = async () => {
       if (nearContext && nearContext.currentUser) {
-        await nearContext.contract.get_pool({
-          streamer_id: nearContext.currentUser.accountId,
-        });
+        await nearContext.contract
+          .get_pool({
+            streamer_id:
+              selectedPool?.streamer_id || nearContext.currentUser.accountId,
+          })
+          .then(setSelectedPool);
       }
     };
 
@@ -82,6 +84,15 @@ export const AppScreen: IComponent = ({}) => {
           )}
         >
           <div className="z-10">
+            {/* ================================================================== */}
+            {/* CSS dum tao cho nay */}
+            <div>Account: {nearContext.currentUser.accountId}</div>
+            <div>
+              Balance:{" "}
+              {nearContext.currentUser.balance.length > 22
+                ? nearContext.currentUser.balance.slice(0, 5) / 100
+                : 0}
+            </div>
             <div
               className="p-4 text-indigo-700 absolute top-5 right-5 font-bold bg-white rounded hover:cursor-pointer hover:text-black hover:bg-indigo-700 duration-300 hover:scale-105"
               onClick={onClickSignOut}
@@ -91,7 +102,7 @@ export const AppScreen: IComponent = ({}) => {
           </div>
 
           <div className="bg-default border-2 border-indigo-500 rounded-[3.5rem] p-8 w-[1200px]">
-            <div className="header flex relative">
+            <div className="header flex justify-end relative">
               <Link href="/">
                 <a className="logo w-20 h-20">
                   <Image
@@ -119,6 +130,7 @@ export const AppScreen: IComponent = ({}) => {
               ) : (
                 <div>
                   <PoolButton />
+
                   <PoolButton isJoin />
                 </div>
               )}

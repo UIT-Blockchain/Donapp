@@ -52,7 +52,7 @@ interface SteadyStudyTokenContractMethods {
   ft_balance_of: (context: NearCallFtBalanceOfContext) => Promise<string>;
 }
 interface NearContractContext {
-  contract: (nearAPI.Contract & SteadyStudyTokenContractMethods) | undefined;
+  contract: nearAPI.Contract | undefined;
   currentUser: NearUserView | undefined;
   nearConfig: any | undefined;
   wallet: nearAPI.WalletConnection | undefined;

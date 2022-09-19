@@ -11,6 +11,6 @@ const cx = classNames;
  */
 
 const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
-const yton = (amount: number) =>
+const ntoy = (amount: number) =>
   (amount * 10).toString().concat("00000000000000000000000");
-export { capitalize, cx, yton };
+export { capitalize, cx, ntoy };

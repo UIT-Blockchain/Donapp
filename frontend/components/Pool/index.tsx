@@ -3,7 +3,7 @@ import PoolButton from "@components/PoolButton";
 import PoolCard from "@components/PoolCard";
 import PoolClose from "@components/PoolClose";
 import { BOATLOAD_OF_GAS } from "@utils/constant";
-import { yton } from "@utils/tools";
+import { ntoy } from "@utils/tools";
 import Image from "next/image";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -18,7 +18,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
   const [inputValues, setInputValues] = useState({
     questId: "",
     desc: "",
-    amount: 0,
+    amount: null,
   });
 
   const handleOnChange = useCallback(
@@ -37,15 +37,17 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
           description: inputValues.desc,
         },
         BOATLOAD_OF_GAS,
-        yton(inputValues.amount)
+        ntoy(inputValues.amount)
       );
     }
   };
+
   const handleOutPool = () => {
     setSelectedPool(null);
   };
+
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-2 gap-8 mt-8">
       {!!quests && (
         <PoolCard
           heading={streamer_id}
@@ -53,14 +55,14 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
           isStreamer={isStreamer}
         />
       )}
-      <div className="col-span-2 px-8 ml-24 pr-40 flex flex-col justify-center gap-y-16">
+      <div className="px-8 flex flex-col justify-center gap-y-16">
         {!!isStreamer ? (
           <PoolClose pool_id={pool_id} />
         ) : (
           <div>
             {" "}
             <div className="rounded-lg overflow-hidden">
-              <div className="flex bg-white items-center p-4">
+              <div className="flex bg-white items-center p-4 mb-4 rounded-lg overflow-hidden">
                 <div className="icon">
                   <Image
                     src="/tx-icon.png"
@@ -80,7 +82,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
                   value={inputValues.questId}
                 />
               </div>
-              <div className="flex bg-white items-center p-4 rounded-bl-lg rounded-br-lg overflow-hidden">
+              <div className="flex bg-white items-center p-4 mb-4 rounded-lg overflow-hidden">
                 <div className="icon">
                   <Image
                     src="/tx-icon.png"
@@ -100,7 +102,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
                   value={inputValues.desc}
                 />
               </div>
-              <div className="flex bg-white items-center p-4 rounded-bl-lg rounded-br-lg overflow-hidden">
+              <div className="flex bg-white items-center p-4 mb-4 rounded-lg overflow-hidden">
                 <div className="icon">
                   <Image
                     src="/tx-icon.png"
@@ -121,7 +123,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
                 />
               </div>
 
-              <div className="flex justify-end p-6">
+              <div className="flex flex-row-reverse justify-between py-6">
                 <button
                   className="bg-gradient-to-b from-[#9C2CF3] to-[#3A49F9] hover:bg-purple-400  text-white font-bold py-6 px-8 rounded-lg text-xl"
                   onClick={handleCreateQuest}
@@ -130,7 +132,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
                   Create quest
                 </button>
                 <button
-                  className="bg-gradient-to-b from-[#9C2CF3] to-[#3A49F9] hover:bg-purple-400  text-white font-bold py-6 px-8 rounded-lg text-xl"
+                  className="bg-gradient-to-b from-[#f32c3d] to-[#f93a67] hover:bg-purple-400  text-white font-bold py-6 px-8 rounded-lg text-xl"
                   onClick={handleOutPool}
                 >
                   {" "}
