@@ -1,5 +1,6 @@
-import { NearContextAtom } from "@atoms/app";
-import AnimationBox from "@components/AnimationBox";
+import { NearContextAtom, SelectedPool } from "@atoms/app";
+import Pool from "@components/Pool";
+import PoolButton from "@components/PoolButton";
 import { cx } from "@utils/tools";
 import initContract from "near-api";
 import * as nearAPI from "near-api-js";
@@ -8,10 +9,9 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 
-const BOATLOAD_OF_GAS = 10 ** 13;
-
 export const AppScreen: IComponent = ({}) => {
   const [nearContext, setNearContext] = useRecoilState(NearContextAtom);
+  const [selectedPool, setSelectedPool] = useRecoilState(SelectedPool);
 
   useEffect(() => {
     const initContractHandler = async () => {
@@ -32,7 +32,19 @@ export const AppScreen: IComponent = ({}) => {
     if (!nearContext) {
       initContractHandler();
     }
-  });
+    // console.log("init...", nearContext);
+  }, [selectedPool, nearContext, setSelectedPool, setNearContext]);
+  useEffect(() => {
+    const handleGetPool = async () => {
+      if (nearContext && nearContext.currentUser) {
+        await nearContext.contract.get_pool({
+          streamer_id: nearContext.currentUser.accountId,
+        });
+      }
+    };
+
+    handleGetPool();
+  }, [nearContext, setSelectedPool]);
 
   if (!nearContext) {
     return <div>loading</div>;
@@ -40,8 +52,6 @@ export const AppScreen: IComponent = ({}) => {
     return <div>loading</div>;
   }
 
-  // const contract = nearContext.contract as SteadyStudyTokenContractMethods;
-  // const currentUser: NearUserView = nearContext.currentUser as NearUserView;
   const wallet: nearAPI.WalletConnection =
     nearContext.wallet as nearAPI.WalletConnection;
 
@@ -59,75 +69,82 @@ export const AppScreen: IComponent = ({}) => {
     wallet.signOut();
     window.location.replace(window.location.origin + window.location.pathname);
   };
-
-  // const onSubmit = async (event: any) => {
-  //   event.preventDefault();
-
-  //   const { fieldset, url1, url2, url3 } = event.target.elements;
-  //   fieldset.disabled = true;
-
-  //   console.log(process.env.NEXT_PUBLIC_CONTRACT_NAME);
-
-  //   // call smartcontract set_balance method.
-  //   await contract.ft_report_study_commit(
-  //     {
-  //       urls: [url1.value, url2.value, url3.value],
-  //       receiver_id: currentUser.accountId,
-  //     },
-  //     BOATLOAD_OF_GAS
-  //   );
-
-  //   // obtain balance after smartcontract set_balance success.
-  //   const balance: string = await contract.ft_balance_of({
-  //     account_id: currentUser.accountId,
-  //   });
-  //   setBalance(balance);
-
-  //   url1.value = "";
-  //   url2.value = "";
-  //   url3.value = "";
-  //   fieldset.disabled = false;
-  //   url1.focus();
-  // };
-
-  // console.log("pool:  ", pool);
-
   return (
     <div
       className={cx(
-        "dark:text-white bg-default h-screen flex justify-center items-center"
+        "dark:text-white bg-default h-screen flex justify-center items-center relative"
       )}
     >
       {nearContext.currentUser ? (
-        <div className="z-10">
-          <div className="p-8 text-white" onClick={onClickSignOut}>
-            Log out
-          </div>
-          <Link href="/donapp" passHref>
-            <a
-              className="bg-[#ffdd50] button-connect w-[40rem] hover:scale-105 active:scale-90 duration-300 border-8 border-white p-8 rounded-lg animate-pulse cursor-pointer z-10"
-              style={{ animationDuration: "4s" }}
+        <div
+          className={cx(
+            "dark:text-white py-28 px-32 bg-center bg-contain  opacity-90 z-10"
+          )}
+        >
+          <div className="z-10">
+            <div
+              className="p-4 text-indigo-700 absolute top-5 right-5 font-bold bg-white rounded hover:cursor-pointer hover:text-black hover:bg-indigo-700 duration-300 hover:scale-105"
+              onClick={onClickSignOut}
             >
-              <div>
-                <Image src={`/mu.png`} alt="connect" width={560} height={560} />
-                <div className="flex flex-row items-center justify-center px-4 py-1  rounded-lg mt-5">
-                  <span
-                    style={{ letterSpacing: "6px" }}
-                    className="font-thin text-black text-xl pr-2"
-                  >
-                    CONNECT YOUR ORGANIZATION
-                  </span>
+              Log out
+            </div>
+          </div>
+
+          <div className="bg-default border-2 border-indigo-500 rounded-[3.5rem] p-8 w-[1200px]">
+            <div className="header flex relative">
+              <Link href="/">
+                <a className="logo w-20 h-20">
+                  <Image
+                    src={`/mu-red.png`}
+                    alt="mu-red"
+                    width={80}
+                    height={80}
+                    className="m-0"
+                  />
+                </a>
+              </Link>
+              {/* <div className="absolute -right-[3.75rem] top-[2.75rem] origin-top-left rotate-12">
+                <Image
+                  src={`/cloud.png`}
+                  alt="cloud"
+                  width={224}
+                  height={215}
+                  className="m-0"
+                />
+              </div> */}
+            </div>
+            <div className="rounded-[3.5rem] z-20">
+              {selectedPool ? (
+                <Pool {...selectedPool} />
+              ) : (
+                <div>
+                  <PoolButton />
+                  <PoolButton isJoin />
                 </div>
-              </div>
-            </a>
-          </Link>
+              )}
+            </div>
+          </div>
         </div>
       ) : (
-        <div className="text-white z-10" onClick={onClickSignIn}>
-          Sign in
+        <div
+          onClick={onClickSignIn}
+          className="bg-[#ffdd50] button-connect w-[40rem] hover:scale-105 active:scale-90 duration-300 border-8 border-white p-8 rounded-lg animate-pulse cursor-pointer z-10"
+          style={{ animationDuration: "4s" }}
+        >
+          <div>
+            <Image src={`/mu.png`} alt="connect" width={560} height={560} />
+            <div className="flex flex-row items-center justify-center px-4 py-1  rounded-lg mt-5">
+              <span
+                style={{ letterSpacing: "6px" }}
+                className="font-thin text-black text-xl pr-2"
+              >
+                CONNECT TO THE APP
+              </span>
+            </div>
+          </div>
         </div>
       )}
-      <AnimationBox />
+      {/* <AnimationBox /> */}
     </div>
   );
 };

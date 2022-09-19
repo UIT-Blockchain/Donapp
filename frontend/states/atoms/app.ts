@@ -1,4 +1,7 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 /**
  * Global dark mode state of app
@@ -22,4 +25,16 @@ const NearContextAtom = atom<NearContractContext | null>({
   dangerouslyAllowMutability: true,
 });
 
-export { DarkmodeAtom, NearContextAtom, SelectedQuestAtom, ToggleTopBarAtom };
+const SelectedPool = atom<IPoolItem | null>({
+  key: "SELECTED_POOL",
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export {
+  DarkmodeAtom,
+  NearContextAtom,
+  SelectedPool,
+  SelectedQuestAtom,
+  ToggleTopBarAtom,
+};

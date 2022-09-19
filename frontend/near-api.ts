@@ -37,6 +37,7 @@ export default async function initContract() {
       "delete_pool",
       "reject_quest",
       "vote_quest",
+      "create_quest",
     ],
     // ContractMethods has no sender
     // // Sender is the account ID to initialize transactions.

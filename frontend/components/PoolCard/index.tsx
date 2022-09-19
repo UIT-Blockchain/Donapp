@@ -32,6 +32,16 @@ const PoolCard: IComponent<PoolCardProps> = ({
       );
     }
   };
+  const handleVoteQuest = async (id: string) => {
+    if (nearContext) {
+      await nearContext.contract.vote_quest(
+        {
+          quest_id: id,
+        },
+        BOATLOAD_OF_GAS
+      );
+    }
+  };
 
   const handleVoteQuest = async (id: string) => {
     if (nearContext) {
@@ -83,6 +93,9 @@ const PoolCard: IComponent<PoolCardProps> = ({
                   {item.challenger}
                 </div>
                 <div>{item.amount}</div>
+                <div>
+                  {(item.voter_ids?.length / item.vote_threshold) * 100}%
+                </div>
               </div>
               {isStreamer ? (
                 <div
@@ -98,7 +111,7 @@ const PoolCard: IComponent<PoolCardProps> = ({
                     handleVoteQuest(item.id);
                   }}
                 >
-                  VOTE
+                  Vote
                 </div>
               )}
             </li>
