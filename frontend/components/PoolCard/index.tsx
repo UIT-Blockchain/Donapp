@@ -12,17 +12,30 @@ interface PoolCardProps {
     height: number;
   };
   listItems?: IQuests;
+  isStreamer?: boolean;
 }
 const PoolCard: IComponent<PoolCardProps> = ({
   heading,
   thumbnail,
   listItems,
+  isStreamer,
 }) => {
   const nearContext = useRecoilValue(NearContextAtom);
 
   const handleRejectQuest = async (id: string) => {
     if (nearContext) {
       await nearContext.contract.reject_quest(
+        {
+          quest_id: id,
+        },
+        BOATLOAD_OF_GAS
+      );
+    }
+  };
+
+  const handleVoteQuest = async (id: string) => {
+    if (nearContext) {
+      await nearContext.contract.vote_quest(
         {
           quest_id: id,
         },
@@ -71,13 +84,23 @@ const PoolCard: IComponent<PoolCardProps> = ({
                 </div>
                 <div>{item.amount}</div>
               </div>
-              <div
-                onClick={() => {
-                  handleRejectQuest(item.id);
-                }}
-              >
-                REJECT
-              </div>
+              {isStreamer ? (
+                <div
+                  onClick={() => {
+                    handleRejectQuest(item.id);
+                  }}
+                >
+                  REJECT
+                </div>
+              ) : (
+                <div
+                  onClick={() => {
+                    handleVoteQuest(item.id);
+                  }}
+                >
+                  VOTE
+                </div>
+              )}
             </li>
           ))}
         </ul>

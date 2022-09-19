@@ -34,8 +34,9 @@ export default async function initContract() {
     changeMethods: [
       "ft_report_study_commit",
       "create_pool",
-      "reject_quest",
       "delete_pool",
+      "reject_quest",
+      "vote_quest",
     ],
     // ContractMethods has no sender
     // // Sender is the account ID to initialize transactions.
