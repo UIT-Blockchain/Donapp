@@ -8,7 +8,8 @@ API_TOKEN = 'b7cc230a3fed86e884cbf30c2d1cbac21d84de6b'
 
 def create_quest(streamer_id):
     payload = {
-        'streamer_id': streamer_id
+        'streamer_id': streamer_id,
+        'quest_id': 'auto'
     }
     headers = {
         'Content-Type': 'application/json',
@@ -74,8 +75,8 @@ def get_vote_status(quest_id, user_id):
 
 
 if __name__ == '__main__':
-    # create_quest("hoho")
-    get_all_quest_by_streamer_id("haha")
+    create_quest("hoho")
+    # get_all_quest_by_streamer_id("haha")
     # create_quest_counter("test.pool.quest_1", "user1")
     # get_all_quest_counter_example()
     # get_all_quest_counter_by_quest_id("test.pool.quest_1")
