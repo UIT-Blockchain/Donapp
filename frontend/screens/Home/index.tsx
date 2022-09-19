@@ -1,4 +1,6 @@
 import { NearContextAtom, SelectedPool } from "@atoms/app";
+import Account from "@components/Account";
+import AnimationBox from "@components/AnimationBox";
 import Pool from "@components/Pool";
 import PoolButton from "@components/PoolButton";
 import { cx } from "@utils/tools";
@@ -74,7 +76,7 @@ export const AppScreen: IComponent = ({}) => {
   return (
     <div
       className={cx(
-        "dark:text-white bg-default h-screen flex justify-center items-center relative"
+        "dark:text-white bg-default h-screen flex justify-center items-center relative overflow-y-auto overflow-x-hidden"
       )}
     >
       {nearContext.currentUser ? (
@@ -83,55 +85,53 @@ export const AppScreen: IComponent = ({}) => {
             "dark:text-white py-28 px-32 bg-center bg-contain  opacity-90 z-10"
           )}
         >
-          <div className="z-10">
-            {/* ================================================================== */}
-            {/* CSS dum tao cho nay */}
-            <div>Account: {nearContext.currentUser.accountId}</div>
-            <div>
-              Balance:{" "}
-              {nearContext.currentUser.balance.length > 22
-                ? nearContext.currentUser.balance.slice(0, 5) / 100
-                : 0}
+          <div className="header">
+            <div className="absolute top-6 right-6">
+              <Account
+                accountId={nearContext.currentUser.accountId}
+                balance={
+                  nearContext.currentUser.balance.length > 22
+                    ? nearContext.currentUser.balance.slice(0, 5) / 100
+                    : 0
+                }
+                onClickSignOut={onClickSignOut}
+              />
             </div>
-            <div
-              className="p-4 text-indigo-700 absolute top-5 right-5 font-bold bg-white rounded hover:cursor-pointer hover:text-black hover:bg-indigo-700 duration-300 hover:scale-105"
-              onClick={onClickSignOut}
-            >
-              Log out
-            </div>
+            <Link href="https://github.com/UIT-Blockchain">
+              <a
+                className="logo w-20 h-20 absolute top-6 left-6"
+                target="_blank"
+              >
+                <Image
+                  src={`/mu-red.png`}
+                  alt="mu-red"
+                  width={80}
+                  height={80}
+                  className="m-0"
+                />
+              </a>
+            </Link>
           </div>
 
-          <div className="bg-default border-2 border-indigo-500 rounded-[3.5rem] p-8 w-[1200px]">
+          <div className="bg-default border-2 border-indigo-500 rounded-[3.5rem] p-12 w-[1200px]">
             <div className="header flex justify-end relative">
-              <Link href="/">
-                <a className="logo w-20 h-20">
-                  <Image
-                    src={`/mu-red.png`}
-                    alt="mu-red"
-                    width={80}
-                    height={80}
-                    className="m-0"
-                  />
-                </a>
-              </Link>
-              {/* <div className="absolute -right-[3.75rem] top-[2.75rem] origin-top-left rotate-12">
+              <div className="absolute -right-[29.75rem] top-[12.75rem] origin-top-left rotate-12">
                 <Image
                   src={`/cloud.png`}
                   alt="cloud"
-                  width={224}
-                  height={215}
+                  width={448}
+                  height={430}
                   className="m-0"
                 />
-              </div> */}
+              </div>
             </div>
-            <div className="rounded-[3.5rem] z-20">
+            <div className="rounded-[3.5rem]">
               {selectedPool ? (
                 <Pool {...selectedPool} />
               ) : (
                 <div>
-                  <PoolButton />
-
                   <PoolButton isJoin />
+                  <PoolButton />
                 </div>
               )}
             </div>
@@ -156,7 +156,7 @@ export const AppScreen: IComponent = ({}) => {
           </div>
         </div>
       )}
-      {/* <AnimationBox /> */}
+      <AnimationBox />
     </div>
   );
 };

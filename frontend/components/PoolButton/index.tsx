@@ -10,7 +10,8 @@ interface PoolButtonProps {
 }
 const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
   const nearContext = useRecoilValue(NearContextAtom);
-  const [poolId, setPoolId] = useState("");
+  const [poolId, setPoolId] = useState("0");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const setSelectedPool = useSetRecoilState(SelectedPool);
 
@@ -34,16 +35,16 @@ const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
           if (data) {
             setSelectedPool(data);
           } else {
-            alert(`${input} doesn't create pool`);
+            setErrorMsg("The pool does not exist...");
           }
         });
     }
   };
   return (
-    <div className="flex justify-center p-6 ">
+    <div className="p-6">
       {!!isJoin ? (
         <div className="flex">
-          <div className="mx-4">
+          <div className="mx-4 grow">
             <form className="rounded-lg overflow-hidden">
               <div className="flex bg-white items-center px-4 py-2">
                 <div className="icon">
@@ -60,15 +61,18 @@ const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
                   name="poolId"
                   className="text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-white focus:outline-none focus:border-b-2 focus:border-indigo-700 "
                   type="text"
-                  placeholder="The pool needs the name..."
+                  placeholder="The name of the pool that you want to join..."
                   onChange={handleOnChange}
                   value={poolId}
                 />
               </div>
+              <div className="error-msg text-right mt-4 text-red-600 text-xl font-semibold">
+                {errorMsg}
+              </div>
             </form>
           </div>
           <button
-            className="bg-green-800 from-[#9C2CF3] to-[#3A49F9] hover:bg-purple-400  text-white font-bold w-[140px] py-6 px-8 rounded-lg text-xl"
+            className="bg-gradient-to-b from-lime-400 to-lime-800 text-white font-bold w-[140px] py-6 px-8 rounded-lg text-xl "
             type="button"
             onClick={() => {
               handleGetPool(poolId);
@@ -78,13 +82,18 @@ const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
           </button>
         </div>
       ) : (
-        <button
-          className="bg-gradient-to-b from-[#9C2CF3] to-[#3A49F9] hover:bg-purple-400  text-white font-bold w-[140px] py-6 px-8 rounded-lg text-xl"
-          type="button"
-          onClick={handleCreatePool}
-        >
-          Create
-        </button>
+        <div className="flex items-center">
+          <div className="text-2xl font-normal w-full py-4 px-4 text-white grow text-right">
+            If you are a streamer, you can create a new pool.
+          </div>
+          <button
+            className="bg-gradient-to-b from-[#9C2CF3] to-[#3A49F9] hover:bg-purple-400  text-white font-bold w-[140px] py-6 px-8 rounded-lg text-xl"
+            type="button"
+            onClick={handleCreatePool}
+          >
+            Create
+          </button>
+        </div>
       )}
     </div>
   );

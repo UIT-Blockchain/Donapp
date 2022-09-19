@@ -46,44 +46,49 @@ const PoolCard: IComponent<PoolCardProps> = ({
   return (
     <div className="bg-card text-white rounded-3xl px-8 py-6">
       <h1 className="text-white text-4xl font-bold ml-6 mb-6">{heading}</h1>
-      {/* <div>
+      <div>
         <Image
-          src={"/lol.png"}
-          width={1200}
-          height={400}
+          src={"/dota.png"}
+          width={720}
+          height={480}
           layout="responsive"
           className="m-0"
-          alt="pool thumbnail"
+          alt="dota2"
         />
-      </div> */}
+      </div>
 
       {!!listItems && (
         <ul className="py-6 overflow-hidden">
           {listItems.map((item: IQuest) => (
             <li
-              className="px-8 py-6 flex gap-x-6 border-b-2 border-gray-700 hover:border-indigo-700 hover:bg-black hover:scale-105 hover:cursor-pointer duration-300"
+              className="px-8 py-6 flex gap-x-6 border-b-2 border-gray-700"
               key={item.id}
             >
-              <div className="icon">
-                <Image
-                  src="/tx-icon.png"
-                  width={24}
-                  height={24}
-                  className="m-0"
-                  alt="icon"
-                  layout="fixed"
-                />
-              </div>
               <div className="content grow">
-                <div className="text-2xl font-medium">
-                  {capitalize(item.description)}
+                <div className="flex items-center">
+                  <span className="text-2xl font-medium grow">
+                    {capitalize(item.description)}
+                  </span>
+                  <span className="italic font-light opacity-90 text-right mr-2">
+                    - {item.challenger}
+                  </span>
                 </div>
-                <div className="text-sm font-light opacity-90 text-right mr-2">
-                  {item.challenger}
-                </div>
-                <div>{item.amount}</div>
-                <div>
-                  {(item.voter_ids?.length / item.vote_threshold) * 100}%
+                <div className="flex flex-col mt-4">
+                  <span className="grow flex items-center py-2">
+                    Amount: <span className="mx-2"> {item.amount} </span>
+                    <Image
+                      src={"/near.png"}
+                      width={30}
+                      height={30}
+                      layout="fixed"
+                      alt="vote"
+                      className="bg-white rounded-full"
+                    />
+                  </span>
+                  <span className="mt-2">
+                    Percentage:{" "}
+                    {(item.voter_ids?.length / item.vote_threshold) * 100}%
+                  </span>
                 </div>
               </div>
               {isStreamer ? (
@@ -91,16 +96,30 @@ const PoolCard: IComponent<PoolCardProps> = ({
                   onClick={() => {
                     handleRejectQuest(item.id);
                   }}
+                  className="m-0 hover:scale-105 duration-300 hover:cursor-pointer p-2 rounded-full h-fit"
                 >
-                  REJECT
+                  <Image
+                    src={"/rejected.png"}
+                    width={40}
+                    height={40}
+                    layout="fixed"
+                    alt="vote"
+                  />
                 </div>
               ) : (
                 <div
                   onClick={() => {
                     handleVoteQuest(item.id);
                   }}
+                  className="m-0 hover:scale-105 duration-300 hover:cursor-pointer p-2 rounded-full border-2 border-[#8c491c] h-fit"
                 >
-                  Vote
+                  <Image
+                    src={"/vote.png"}
+                    width={40}
+                    height={40}
+                    layout="fixed"
+                    alt="vote"
+                  />
                 </div>
               )}
             </li>

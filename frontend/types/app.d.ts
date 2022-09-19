@@ -23,19 +23,6 @@ interface NearUserView {
   balance: string;
 }
 
-//  interface AppStatusMessageSetContext {
-//     message: string;
-//     account_id: string;
-// }
-//  interface AppStatusMessageGetContext {
-//     account_id: string;
-// }
-//  interface NearContractStatusMessageMethods {
-//     // see awesome-rust-dapp/src/lib.rs#StatusMessage.set_status
-//     set_status: (context: AppStatusMessageSetContext, boatloadOfGas: string) => Promise<void>;
-//     // see awesome-rust-dapp/src/lib.rs#StatusMessage.get_status
-//     get_status: (context: AppStatusMessageGetContext) => Promise<string>
-// }
 interface NearCallFtBalanceOfContext {
   account_id: string;
 }

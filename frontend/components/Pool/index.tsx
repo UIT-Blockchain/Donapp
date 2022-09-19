@@ -18,7 +18,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
   const [inputValues, setInputValues] = useState({
     questId: "",
     desc: "",
-    amount: null,
+    amount: 0,
   });
 
   const handleOnChange = useCallback(
@@ -37,7 +37,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
           description: inputValues.desc,
         },
         BOATLOAD_OF_GAS,
-        ntoy(inputValues.amount)
+        ntoy(inputValues.amount!)
       );
     }
   };
@@ -119,7 +119,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
                   type="number"
                   placeholder="Amount"
                   onChange={handleOnChange}
-                  value={inputValues.amount}
+                  value={inputValues.amount!}
                 />
               </div>
 
