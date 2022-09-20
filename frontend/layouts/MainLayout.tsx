@@ -10,10 +10,13 @@ export const MainLayout: IComponent = ({ children }) => {
 
   return (
     <div
-      className={cx("main-layout w-full h-full overflow-x-hidden", {
-        dark:
-          darkmode === "auto" ? currentBrowserDarkmode : darkmode === "dark",
-      })}
+      className={cx(
+        "main-layout w-full h-screen overflow-x-hidden bg-default",
+        {
+          dark:
+            darkmode === "auto" ? currentBrowserDarkmode : darkmode === "dark",
+        }
+      )}
     >
       {/* Smooth out darkmode transition with transition-all */}
       <div

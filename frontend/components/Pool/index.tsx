@@ -17,7 +17,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
 
   const [inputValues, setInputValues] = useState({
     desc: "",
-    amount: 0,
+    amount: null,
   });
 
   const handleOnChange = useCallback(
