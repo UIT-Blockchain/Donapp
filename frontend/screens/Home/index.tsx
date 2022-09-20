@@ -113,7 +113,7 @@ export const AppScreen: IComponent = ({}) => {
             </Link>
           </div>
 
-          <div className="bg-default border-2 border-indigo-500 rounded-[3.5rem] p-12 w-[1200px]">
+          <div className="bg-default border-2 border-indigo-500 rounded-[3.5rem] p-12 w-[1400px]">
             <div className="header flex justify-end relative">
               <div className="absolute -right-[29.75rem] top-[12.75rem] origin-top-left rotate-12">
                 <Image
