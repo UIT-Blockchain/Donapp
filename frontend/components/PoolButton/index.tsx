@@ -10,7 +10,7 @@ interface PoolButtonProps {
 }
 const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
   const nearContext = useRecoilValue(NearContextAtom);
-  const [poolId, setPoolId] = useState(null);
+  const [poolId, setPoolId] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   const setSelectedPool = useSetRecoilState(SelectedPool);

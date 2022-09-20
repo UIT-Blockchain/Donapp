@@ -11,7 +11,7 @@ interface PoolCardProps {
     width: number;
     height: number;
   };
-  listItems?: IQuests;
+  listItems?: Array<IQuest>;
   isStreamer?: boolean;
 }
 const PoolCard: IComponent<PoolCardProps> = ({
@@ -96,7 +96,7 @@ const PoolCard: IComponent<PoolCardProps> = ({
               {isStreamer ? (
                 <div
                   onClick={() => {
-                    handleRejectQuest(item.id);
+                    handleRejectQuest(item.id.toString());
                   }}
                   className="m-0 hover:scale-105 duration-300 hover:cursor-pointer p-2 rounded-full h-fit"
                 >
@@ -111,7 +111,7 @@ const PoolCard: IComponent<PoolCardProps> = ({
               ) : (
                 <div
                   onClick={() => {
-                    handleVoteQuest(item.id);
+                    handleVoteQuest(item.id.toString());
                   }}
                   className="m-0 hover:scale-105 duration-300 hover:cursor-pointer p-2 rounded-full border-2 border-[#8c491c] h-fit"
                 >

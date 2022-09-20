@@ -76,7 +76,7 @@ export const AppScreen: IComponent = ({}) => {
   return (
     <div
       className={cx(
-        "dark:text-white bg-default flex justify-center items-center relative h-full"
+        "dark:text-white p-40 bg-default flex justify-center items-center relative h-full"
       )}
     >
       {nearContext.currentUser ? (
@@ -140,11 +140,17 @@ export const AppScreen: IComponent = ({}) => {
       ) : (
         <div
           onClick={onClickSignIn}
-          className="bg-[#ffdd50] button-connect w-[40rem] hover:scale-105 active:scale-90 duration-300 border-8 border-white p-8 rounded-lg animate-pulse cursor-pointer z-10"
+          className="bg-[#ffdd50] button-connect hover:scale-105 active:scale-90 duration-300 border-8 border-white p-8 rounded-lg animate-pulse cursor-pointer z-10"
           style={{ animationDuration: "4s" }}
         >
           <div>
-            <Image src={`/mu.png`} alt="connect" width={560} height={560} />
+            <Image
+              src={`/mu.png`}
+              alt="connect"
+              width={320}
+              height={320}
+              layout="responsive"
+            />
             <div className="flex flex-row items-center justify-center px-4 py-1  rounded-lg mt-5">
               <span
                 style={{ letterSpacing: "6px" }}
