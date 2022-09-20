@@ -1,5 +1,3 @@
-import * as nearAPI from "near-api-js";
-
 type TDarkModeStatus = "dark" | "light" | "auto";
 type TTopBarStatus = "hidden" | "show";
 
@@ -37,12 +35,6 @@ interface SteadyStudyTokenContractMethods {
     boatloadOfGas: string
   ) => Promise<void>;
   ft_balance_of: (context: NearCallFtBalanceOfContext) => Promise<string>;
-}
-interface NearContractContext {
-  contract: nearAPI.Contract | undefined;
-  currentUser: NearUserView | undefined;
-  nearConfig: any | undefined;
-  wallet: nearAPI.WalletConnection | undefined;
 }
 
 interface FormProps {

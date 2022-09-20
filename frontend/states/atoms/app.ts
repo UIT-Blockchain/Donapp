@@ -1,3 +1,4 @@
+import * as nearAPI from "near-api-js";
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
@@ -6,6 +7,21 @@ const { persistAtom } = recoilPersist();
 /**
  * Global dark mode state of app
  */
+export interface ContractExtends extends nearAPI.Contract {
+  get_pool: Function;
+  create_quest: Function;
+  create_pool: Function;
+  delete_pool: Function;
+  reject_quest: Function;
+  vote_quest: Function;
+}
+interface NearContractContext {
+  contract: ContractExtends;
+  currentUser: NearUserView | undefined;
+  nearConfig: any | undefined;
+  wallet: nearAPI.WalletConnection | undefined;
+}
+
 const DarkmodeAtom = atom<TDarkModeStatus>({
   key: "DARK_MODE_STATE",
   default: "auto",

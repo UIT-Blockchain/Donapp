@@ -39,10 +39,6 @@ export default async function initContract() {
       "vote_quest",
       "create_quest",
     ],
-    // ContractMethods has no sender
-    // // Sender is the account ID to initialize transactions.
-    // // getAccountId() will return empty string if user is still unauthorized
-    // sender: walletConnection.getAccountId()
   };
   const contract = await new nearAPI.Contract(
     walletConnection.account(),

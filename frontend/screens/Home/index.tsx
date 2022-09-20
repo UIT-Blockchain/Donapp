@@ -1,4 +1,4 @@
-import { NearContextAtom, SelectedPool } from "@atoms/app";
+import { ContractExtends, NearContextAtom, SelectedPool } from "@atoms/app";
 import Account from "@components/Account";
 import AnimationBox from "@components/AnimationBox";
 import Pool from "@components/Pool";
@@ -21,7 +21,7 @@ export const AppScreen: IComponent = ({}) => {
         initContract().then(
           ({ contract, currentUser, nearConfig, walletConnection }) => {
             setNearContext({
-              contract: contract as nearAPI.Contract,
+              contract: contract as ContractExtends,
               currentUser,
               nearConfig,
               wallet: walletConnection,
@@ -48,7 +48,7 @@ export const AppScreen: IComponent = ({}) => {
     };
 
     handleGetPool();
-  }, [nearContext, setSelectedPool]);
+  }, [nearContext, setSelectedPool, selectedPool?.streamer_id]);
 
   if (!nearContext) {
     return <div>loading</div>;
@@ -91,7 +91,7 @@ export const AppScreen: IComponent = ({}) => {
                 accountId={nearContext.currentUser.accountId}
                 balance={
                   nearContext.currentUser.balance.length > 22
-                    ? nearContext.currentUser.balance.slice(0, 5) / 100
+                    ? Number(nearContext.currentUser.balance.slice(0, 5)) / 100
                     : 0
                 }
                 onClickSignOut={onClickSignOut}

@@ -14,7 +14,6 @@
     "@near-wallet-selector/core": "^7.0.2",
     "@near-wallet-selector/ledger": "^7.0.2",
     "@near-wallet-selector/my-near-wallet": "^7.0.2",
-    "@reach/tabs": "^0.17.0",
     "@types/react-slick": "^0.23.8",
     "bn.js": "^5.2.1",
     "classnames": "^2.3.1",

@@ -11,7 +11,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
   const setSelectedPool = useSetRecoilState(SelectedPool);
 
   const nearContext = useRecoilValue(NearContextAtom);
-  const isStreamer = streamer_id === nearContext.currentUser.accountId;
+  const isStreamer = streamer_id === nearContext?.currentUser?.accountId;
   const pool_id: string | undefined = streamer_id && streamer_id + ".pool";
   const [questIdCounter, setQuestIdCounter] = useRecoilState(QuestIdCounter);
 
@@ -29,16 +29,18 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
   );
   const handleCreateQuest = async () => {
     if (nearContext) {
-      setQuestIdCounter(questIdCounter + 1);
-      await nearContext.contract.create_quest(
-        {
-          streamer_id,
-          id: pool_id + "_" + questIdCounter.toString(),
-          description: inputValues.desc,
-        },
-        BOATLOAD_OF_GAS,
-        ntoy(inputValues.amount!)
-      );
+      if (!!nearContext.contract?.create_quest) {
+        setQuestIdCounter(questIdCounter + 1);
+        await nearContext?.contract?.create_quest(
+          {
+            streamer_id,
+            id: pool_id + "_" + questIdCounter.toString(),
+            description: inputValues.desc,
+          },
+          BOATLOAD_OF_GAS,
+          ntoy(inputValues.amount!)
+        );
+      }
     }
   };
 
