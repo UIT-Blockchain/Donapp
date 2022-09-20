@@ -76,13 +76,13 @@ export const AppScreen: IComponent = ({}) => {
   return (
     <div
       className={cx(
-        "dark:text-white bg-default h-screen flex justify-center items-center relative overflow-y-auto overflow-x-hidden"
+        "dark:text-white bg-default flex justify-center items-center relative overflow-y-auto overflow-x-hidden"
       )}
     >
       {nearContext.currentUser ? (
         <div
           className={cx(
-            "dark:text-white py-28 px-32 bg-center bg-contain  opacity-90 z-10"
+            "dark:text-white px-32 pt-40 bg-center bg-contain  opacity-90 z-10"
           )}
         >
           <div className="header">

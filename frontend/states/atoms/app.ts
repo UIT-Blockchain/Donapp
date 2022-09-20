@@ -31,9 +31,16 @@ const SelectedPool = atom<IPoolItem | null>({
   effects_UNSTABLE: [persistAtom],
 });
 
+const QuestIdCounter = atom<number>({
+  key: "QUEST_ID_COUNTER",
+  default: -1,
+  effects_UNSTABLE: [persistAtom],
+});
+
 export {
   DarkmodeAtom,
   NearContextAtom,
+  QuestIdCounter,
   SelectedPool,
   SelectedQuestAtom,
   ToggleTopBarAtom,

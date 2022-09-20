@@ -1,22 +1,21 @@
-import { NearContextAtom, SelectedPool } from "@atoms/app";
-import PoolButton from "@components/PoolButton";
+import { NearContextAtom, QuestIdCounter, SelectedPool } from "@atoms/app";
 import PoolCard from "@components/PoolCard";
 import PoolClose from "@components/PoolClose";
 import { BOATLOAD_OF_GAS } from "@utils/constant";
 import { ntoy } from "@utils/tools";
 import Image from "next/image";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { ChangeEvent, useCallback, useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
-  const [selectedPool, setSelectedPool] = useRecoilState(SelectedPool);
+  const setSelectedPool = useSetRecoilState(SelectedPool);
 
   const nearContext = useRecoilValue(NearContextAtom);
   const isStreamer = streamer_id === nearContext.currentUser.accountId;
   const pool_id: string | undefined = streamer_id && streamer_id + ".pool";
+  const [questIdCounter, setQuestIdCounter] = useRecoilState(QuestIdCounter);
 
   const [inputValues, setInputValues] = useState({
-    questId: "",
     desc: "",
     amount: 0,
   });
@@ -30,10 +29,11 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
   );
   const handleCreateQuest = async () => {
     if (nearContext) {
+      setQuestIdCounter(questIdCounter + 1);
       await nearContext.contract.create_quest(
         {
           streamer_id,
-          id: inputValues.questId,
+          id: pool_id + "_" + questIdCounter.toString(),
           description: inputValues.desc,
         },
         BOATLOAD_OF_GAS,
@@ -44,6 +44,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
 
   const handleOutPool = () => {
     setSelectedPool(null);
+    setQuestIdCounter(-1);
   };
 
   return (
@@ -63,31 +64,11 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
             {" "}
             <div className="rounded-lg overflow-hidden">
               <div className="flex bg-white items-center p-4 mb-4 rounded-lg overflow-hidden">
-                <div className="icon">
+                <div className="icon flex items-center">
                   <Image
-                    src="/tx-icon.png"
-                    width={24}
-                    height={24}
-                    className="m-0"
-                    alt="icon"
-                    layout="fixed"
-                  />
-                </div>
-                <input
-                  name="questId"
-                  className="text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-white focus:outline-none focus:border-b-2 focus:border-indigo-700 "
-                  type="text"
-                  placeholder="The quest needs the id..."
-                  onChange={handleOnChange}
-                  value={inputValues.questId}
-                />
-              </div>
-              <div className="flex bg-white items-center p-4 mb-4 rounded-lg overflow-hidden">
-                <div className="icon">
-                  <Image
-                    src="/tx-icon.png"
-                    width={24}
-                    height={24}
+                    src="/desc.png"
+                    width={30}
+                    height={30}
                     className="m-0"
                     alt="icon"
                     layout="fixed"
@@ -97,20 +78,20 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
                   name="desc"
                   className="text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-white focus:outline-none focus:border-b-2 focus:border-indigo-700 "
                   type="text"
-                  placeholder="The quest needs some description here"
+                  placeholder="Some description here"
                   onChange={handleOnChange}
                   value={inputValues.desc}
                 />
               </div>
               <div className="flex bg-white items-center p-4 mb-4 rounded-lg overflow-hidden">
-                <div className="icon">
+                <div className="icon flex items-center">
                   <Image
-                    src="/tx-icon.png"
-                    width={24}
-                    height={24}
-                    className="m-0"
-                    alt="icon"
+                    src={"/near-2.png"}
+                    width={30}
+                    height={30}
                     layout="fixed"
+                    alt="vote"
+                    className="bg-white rounded-full"
                   />
                 </div>
                 <input
