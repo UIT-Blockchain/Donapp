@@ -44,8 +44,10 @@ const PoolCard: IComponent<PoolCardProps> = ({
   };
 
   return (
-    <div className="bg-card text-white rounded-3xl px-8 py-6">
-      <h1 className="text-white text-4xl font-bold ml-6 mb-6">{heading}</h1>
+    <div className="bg-card text-white rounded-3xl py-6">
+      <h1 className="text-amber-300 text-4xl text-center font-bold ml-6 mb-6">
+        {heading}.pool
+      </h1>
       <div>
         <Image
           src={"/dota.png"}

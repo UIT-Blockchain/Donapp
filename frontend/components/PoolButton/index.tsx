@@ -18,6 +18,7 @@ const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
   const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setPoolId(value);
+    setErrorMsg("");
   }, []);
 
   const handleCreatePool = async () => {
@@ -43,43 +44,45 @@ const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
   return (
     <div className="p-6">
       {!!isJoin ? (
-        <div className="flex">
-          <div className="mx-4 grow">
-            <form className="rounded-lg overflow-hidden">
-              <div className="flex bg-white items-center px-4 py-2">
-                <div className="icon">
-                  <Image
-                    src="/tx-icon.png"
-                    width={24}
-                    height={24}
-                    className="m-0"
-                    alt="icon"
-                    layout="fixed"
+        <div>
+          <div className="flex">
+            <div className="mx-4 grow">
+              <form className="rounded-lg overflow-hidden">
+                <div className="flex bg-white items-center px-4 py-2">
+                  <div className="icon">
+                    <Image
+                      src="/tx-icon.png"
+                      width={24}
+                      height={24}
+                      className="m-0"
+                      alt="icon"
+                      layout="fixed"
+                    />
+                  </div>
+                  <input
+                    name="poolId"
+                    className="text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-white focus:outline-none focus:border-b-2 focus:border-indigo-700 "
+                    type="text"
+                    placeholder="The name of the pool that you want to join..."
+                    onChange={handleOnChange}
+                    value={poolId}
                   />
                 </div>
-                <input
-                  name="poolId"
-                  className="text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-white focus:outline-none focus:border-b-2 focus:border-indigo-700 "
-                  type="text"
-                  placeholder="The name of the pool that you want to join..."
-                  onChange={handleOnChange}
-                  value={poolId}
-                />
-              </div>
-              <div className="error-msg text-right mt-4 text-red-600 text-xl font-semibold">
-                {errorMsg}
-              </div>
-            </form>
+              </form>
+            </div>
+            <button
+              className="bg-gradient-to-b from-lime-400 to-lime-800 text-white font-bold w-[140px] py-6 px-8 rounded-lg text-xl "
+              type="button"
+              onClick={() => {
+                handleGetPool(poolId);
+              }}
+            >
+              Join
+            </button>
           </div>
-          <button
-            className="bg-gradient-to-b from-lime-400 to-lime-800 text-white font-bold w-[140px] py-6 px-8 rounded-lg text-xl "
-            type="button"
-            onClick={() => {
-              handleGetPool(poolId);
-            }}
-          >
-            Join
-          </button>
+          <div className="error-msg text-center mt-4 text-red-600 text-xl font-semibold">
+            {errorMsg ? errorMsg : <span>&nbsp;</span>}
+          </div>
         </div>
       ) : (
         <div className="flex items-center">

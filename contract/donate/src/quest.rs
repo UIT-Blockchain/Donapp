@@ -28,8 +28,8 @@ impl Donap {
             "Pool doesn't have enough slot"
         );
         let amount = env::attached_deposit();
-        let vote_threshold: u64 = yton(amount) as u64 * 10;
-        assert!(vote_threshold > 1, "Not enough amount");
+        let vote_threshold: u64 = yton(amount * 10) as u64;
+        assert!(vote_threshold >= 10, "Need to deposit at least 1 NEAR");
         let challenger = env::predecessor_account_id();
 
         let quest = Quest {
