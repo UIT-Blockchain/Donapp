@@ -1,3 +1,14 @@
+import Head from "next/head";
+
 export const DefaultLayout: IComponent = ({ children }) => {
-  return <div className="default-layout">{children}</div>;
+  return (
+    <div className="default-layout">
+      <Head>
+        <title>Donapp</title>
+        <meta name="description" content="Donapp - Donating platform " />
+        <link rel="icon" href="/near-2.png" />
+      </Head>
+      {children}
+    </div>
+  );
 };
