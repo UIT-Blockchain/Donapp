@@ -91,7 +91,12 @@ export const AppScreen: IComponent = ({}) => {
                 accountId={nearContext.currentUser.accountId}
                 balance={
                   nearContext.currentUser.balance.length > 22
-                    ? Number(nearContext.currentUser.balance.slice(0, 5)) / 100
+                    ? Number(
+                        nearContext.currentUser.balance.slice(
+                          0,
+                          nearContext.currentUser.balance.length - 22
+                        )
+                      ) / 100
                     : 0
                 }
                 onClickSignOut={onClickSignOut}
