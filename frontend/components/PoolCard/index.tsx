@@ -87,6 +87,9 @@ const PoolCard: IComponent<PoolCardProps> = ({
                       className="bg-white rounded-full"
                     />
                   </span>
+                  <span className="my-2">
+                    Votes need: {item.vote_threshold}
+                  </span>
                   <span className="mt-2">
                     Percentage:{" "}
                     {(item.voter_ids?.length / item.vote_threshold) * 100}%

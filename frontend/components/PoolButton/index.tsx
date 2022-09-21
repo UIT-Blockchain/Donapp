@@ -63,7 +63,7 @@ const PoolButton: IComponent<PoolButtonProps> = ({ isJoin }) => {
                     name="poolId"
                     className="text-2xl font-normal w-full py-4 px-4 text-gray-800  border-b-2 border-white focus:outline-none focus:border-b-2 focus:border-indigo-700 "
                     type="text"
-                    placeholder="The name of the pool that you want to join..."
+                    placeholder="The name of the streamer..."
                     onChange={handleOnChange}
                     value={poolId}
                   />
