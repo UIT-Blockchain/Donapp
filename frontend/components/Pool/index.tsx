@@ -34,7 +34,7 @@ const Pool: IComponent<IPoolItem> = ({ streamer_id, quests }) => {
         await nearContext?.contract?.create_quest(
           {
             streamer_id,
-            id: pool_id + "_" + questIdCounter.toString(),
+            id: pool_id + "_" + quests.length.toString(),
             description: inputValues.desc,
           },
           BOATLOAD_OF_GAS,
