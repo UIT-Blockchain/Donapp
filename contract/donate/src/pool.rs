@@ -45,7 +45,10 @@ impl Donap {
 
     pub fn delete_pool(&mut self, pool_id: PoolId) -> bool {
         let predecessor = env::predecessor_account_id();
-        let pool = self.pool_by_id.get(&pool_id).expect("Pool doesn't exist");
+        let pool = self
+            .pool_by_id
+            .remove(&pool_id)
+            .expect("Pool doesn't exist");
 
         let is_challenger = pool
             .challenger_of_quest
@@ -63,7 +66,6 @@ impl Donap {
                 Promise::new(account_id).transfer(quest.amount);
                 self.quest_by_id.remove(&quest_id);
             }
-            self.pool_by_id.remove(&pool.id);
             return true;
         }
         if is_challenger {
@@ -83,7 +85,6 @@ impl Donap {
                 Promise::new(account_id).transfer(quest.amount + fee_per_quest);
                 self.quest_by_id.remove(&quest_id);
             }
-            self.pool_by_id.remove(&pool.id);
             return true;
         }
         false
