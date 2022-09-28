@@ -17,6 +17,7 @@ pub struct Quest {
 impl Donap {
     #[payable]
     pub fn create_quest(&mut self, streamer_id: AccountId, id: String, description: String) {
+        let id = env::block_timestamp().to_string();
         assert!(self.quest_by_id.get(&id).is_none(), "Quest already existed");
         let pool_id = format!("{}.pool", streamer_id);
         let mut pool = self
@@ -28,9 +29,11 @@ impl Donap {
             "Pool doesn't have enough slot"
         );
         let amount = env::attached_deposit();
-        let vote_threshold: u64 = yton(amount * 10) as u64;
-        assert!(vote_threshold >= 10, "Need to deposit at least 1 NEAR");
+        let vote_threshold: u64 = yton(amount * 2) as u64;
+        assert!(vote_threshold >= 2, "Need to deposit at least 1 NEAR");
         let challenger = env::predecessor_account_id();
+
+        let timestamp = env::block_timestamp().to_string();
 
         let quest = Quest {
             id: id.clone(),
@@ -39,7 +42,7 @@ impl Donap {
             amount,
             description,
             vote_threshold,
-            voter_ids: Vector::new(id.as_bytes()),
+            voter_ids: Vector::new(timestamp.as_bytes()),
         };
 
         self.quest_by_id.insert(&id, &quest);
