@@ -1,4 +1,4 @@
-#Donapp version 1 at Near & VBI Hackathon 10/04/2022.
+# Donapp version 1 at Near & VBI Hackathon 10/04/2022.
 
 ### Prequesites
 
